@@ -12,11 +12,18 @@ def get_index_from_title(title):
 
 ##Step 1: Read CSV File
 df = pd.read_csv("movie_dataset.csv")
-print df.head()
-
+#print (df.columns)
 ##Step 2: Select Features
+features = ['keywords','cast','genres','director']
+for feature in features:
+    df[feature] = df[feature].fillna('')
 
 ##Step 3: Create a column in DF which combines all selected features
+def combined_features(row):
+    return row['keywords'] + " " + row['cast'] + " " +row['genres'] + " " +row['director']
+ 
+df["combined_features"] = df.apply(combined_features,axis=1)
+print ("Combined Features:" ,df["combined_features"].head)
 
 ##Step 4: Create count matrix from this new combined column
 
